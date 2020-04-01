@@ -5,7 +5,7 @@ on:
     - "website/pages/docs/**/*.mdx"
 jobs:
   inspec:
-    name: '[Check] Markdown Code Blocks' 
+    name: Test Markdown Code Blocks 
     runs-on: ubuntu-latest
     services:
       inspec-target:
@@ -20,7 +20,7 @@ jobs:
           profile: 'github'
           markdown: ${{github.workspace}}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          file_pattern: "website/pages/docs/**/*.mdx" 
+          file_pattern: "**/*.mdx" 
       - name: Upload Test Results 
         uses: actions/upload-artifact@v1
         if: always()
