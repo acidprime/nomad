@@ -15,12 +15,12 @@ jobs:
       - name: Download Markdown
         uses: actions/checkout@v2.0.0
       - name: Run Syntax Checks 
-        uses: hashicorp/learn-inspec@io
+        uses: hashicorp/learn-inspec@master
         with:
           profile: 'github'
           markdown: ${{github.workspace}}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          file_pattern: "**/*.mdx" 
+          file_pattern: "website/pages/docs/**/*.mdx" 
       - name: Upload Test Results 
         uses: actions/upload-artifact@v1
         if: always()
