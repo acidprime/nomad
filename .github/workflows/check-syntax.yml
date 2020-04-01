@@ -1,0 +1,29 @@
+name: HashiCorp Syntax Checker
+on:
+  push:
+    paths:
+    - "website/pages/docs/**/*.mdx"
+jobs:
+  inspec:
+    name: '[Check] Markdown Code Blocks' 
+    runs-on: ubuntu-latest
+    services:
+      inspec-target:
+        image: hashieducation/inspec-target
+        options: --name inspec-target
+    steps:
+      - name: Download Markdown
+        uses: actions/checkout@v2.0.0
+      - name: Run Syntax Checks 
+        uses: hashicorp/learn-inspec@io
+        with:
+          profile: 'github'
+          markdown: ${{github.workspace}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          file_pattern: "website/pages/docs/**/*.mdx" 
+      - name: Upload Test Results 
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: HTML Report 
+          path: inspec.html
